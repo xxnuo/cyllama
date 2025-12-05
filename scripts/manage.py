@@ -532,7 +532,7 @@ class ShellCmd:
         """activate cmake build stage"""
         _cmd = f"cmake --build {build_dir}"
         if release:
-            _cmd += " --config Release"
+            _cmd += " --config Release --parallel"
         self.cmd(_cmd)
 
     def cmake_build_targets(
@@ -541,7 +541,7 @@ class ShellCmd:
         """build specific cmake targets"""
         _cmd = f"cmake --build {build_dir}"
         if release:
-            _cmd += " --config Release"
+            _cmd += " --config Release --parallel"
         for target in targets:
             _cmd += f" --target {target}"
         self.cmd(_cmd)
@@ -2134,7 +2134,7 @@ class Application(ShellCmd, metaclass=MetaCommander):
         )
 
         self.log.info("Building binaries...")
-        self.cmd(f"cmake --build {bins_build_dir} --config Release -j", cwd=build_dir)
+        self.cmd(f"cmake --build {bins_build_dir} --config Release --parallel", cwd=build_dir)
 
         # Copy binaries
         self.log.info(f"Installing binaries to {bin_dir}...")
